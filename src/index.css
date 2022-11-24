@@ -48,7 +48,6 @@ body{
   max-width: var(--max-width);
   min-height: 100vh;
   margin: 0 auto;
-  border: solid;
   padding: 2rem 1rem;
 }
 .App h1{
@@ -69,9 +68,33 @@ body{
   letter-spacing: var(--spacing);
   background-color: transparent;
   outline: none;
+  margin: 2rem 0;
 }
 .search-input input:hover{
   border-bottom: none;
   outline: 2px solid var(--clr-black);
   border-radius: var(--radius);
+}
+.wrapper-list{
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+.card{
+padding:  2rem;
+box-shadow: var(--dark-shadow);
+}
+.card h4{
+  margin-bottom: 0.5rem;
+}
+.card button{
+  margin: 0.5rem 0;
+  margin-right: 1rem;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #2d87c8;
+}
+.card button:nth-child(4){
+  color: var(--clr-red-dark);
 }

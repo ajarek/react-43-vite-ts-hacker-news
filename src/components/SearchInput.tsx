@@ -1,9 +1,9 @@
-type Props ={
+type Props = {
   value: string
-  onChange: (e: React.ChangeEvent<HTMLInputElement>)=> void
-  focus:any
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
+  focus: any
 }
-const SearchInput = ({ onChange, value,focus}:Props) => {
+const SearchInput = ({ onChange, value, focus }: Props) => {
   return (
     <div className='search-input'>
       <input

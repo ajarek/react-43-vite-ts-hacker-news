@@ -1,25 +1,39 @@
-import { ElementType, SetStateAction, useEffect, useRef, useState } from 'react'
-import SearchInput  from './components/SearchInput'
+import { SetStateAction, useEffect, useRef, useState } from 'react'
+import { useFetch } from './api/useFetch'
+import ListData from './components/ListData'
+import SearchInput from './components/SearchInput'
+
 function App() {
-  const url = 'https://hn.algolia.com/api/v1/search?query=pizza&page=0'
   const [valueSearch, setValueSearch] = useState('React')
+  const [newData, SetNewData] = useState<[]>([])
   const searchInput = useRef<HTMLInputElement>(null)
-  
+
   const InputSearch = (e: { target: { value: SetStateAction<string> } }) => {
     setValueSearch(e.target.value)
   }
   useEffect(() => {
     searchInput.current?.focus()
   }, [])
+  const url = `https://hn.algolia.com/api/v1/search?query=${valueSearch}&page=0`
+
+  const { data, pending, error } = useFetch(url)
+  //  console.log(data?.hits);
+
+  useEffect(() => {
+    if (data) {
+      const { hits } = data
+      SetNewData(hits ? hits : [])
+    }
+  })
   return (
     <div className='App'>
       <h1> Search Hacker News</h1>
       <SearchInput
-       onChange={InputSearch}
-       value={valueSearch}
-       focus={searchInput}
-     
+        onChange={InputSearch}
+        value={valueSearch}
+        focus={searchInput}
       />
+      <ListData data={newData} />
     </div>
   )
 }
