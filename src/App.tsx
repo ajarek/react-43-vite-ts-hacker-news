@@ -1,6 +1,7 @@
 import { SetStateAction, useEffect, useRef, useState } from 'react'
 import { useFetch } from './api/useFetch'
 import ListData from './components/ListData'
+import Loading from './components/Loading'
 import SearchInput from './components/SearchInput'
 
 function App() {
@@ -27,6 +28,11 @@ function App() {
   })
   return (
     <div className='App'>
+      {pending ? (
+        <div className={'full-page'}>
+          <Loading />
+        </div>
+      ) : null}
       <h1> Search Hacker News</h1>
       <SearchInput
         onChange={InputSearch}
