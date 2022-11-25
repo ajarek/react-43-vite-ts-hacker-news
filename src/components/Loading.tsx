@@ -1,9 +1,7 @@
 import { ReactElement } from "react"
 
 type Props = {
-  children?:
-  | React.ReactChild
-  | React.ReactChild[];
+  children?:React.ReactNode
 }
 export const Loading = ({children}:Props) => {
   return <div className={'loading'}> 
