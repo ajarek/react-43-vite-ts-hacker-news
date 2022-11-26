@@ -7,7 +7,7 @@ interface Data {
   objectID:string
 }
 type Props = {
-  data: []
+  data:Data[]
   removeCard:(event: React.MouseEvent<HTMLButtonElement>)=>void
   
 
@@ -21,6 +21,7 @@ const ListData = ({ data,removeCard}: Props) => {
           <div
             key={index}
             className={'card'}
+            id={el.objectID}
           >
             <h4>{el.title}</h4>
             <p>
@@ -34,7 +35,7 @@ const ListData = ({ data,removeCard}: Props) => {
               Read More
             </a>
             <button className='button'
-            id={el.objectID}
+            
             onClick={removeCard}
             >
               Remove

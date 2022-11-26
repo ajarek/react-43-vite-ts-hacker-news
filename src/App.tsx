@@ -22,7 +22,7 @@ export const AppContext = createContext<GlobalContent>({
 
 function App() {
   const [valueSearch, setValueSearch] = useState('React')
-  const [newData, SetNewData] = useState<[]>([])
+  const [newData, SetNewData] = useState([])
   const [pageNumber, setPageNumber] = useState(0)
   const searchInput = useRef<HTMLInputElement>(null)
   const url = `https://hn.algolia.com/api/v1/search?query=${valueSearch}&page=${pageNumber}`
@@ -37,14 +37,20 @@ function App() {
   const { data, pending, error } = useFetch(url)
 
   useEffect(() => {
+    const addData=()=>{
     if (data) {
       const { hits } = data
-      SetNewData(hits ? hits : [])
+      SetNewData( hits )
     }
-  })
-  const removeCard = (e: any) => {
-    e.target.parentElement.remove()
-    console.log(newData.length)
+  }
+  addData()
+  },[data])
+  const removeCard =(e: any) => {
+   
+   const newArr=newData?.filter((el:any)=>el.objectID !== e.target.parentElement.id)
+
+     SetNewData(newArr)
+    
   }
 
   return (
