@@ -6,6 +6,7 @@ import {
   createContext,
 } from 'react'
 import { useFetch } from './api/useFetch'
+import useDebounce from './hooks/useDebounce'
 import ErrorMessage from './components/ErrorMessage'
 import ListData from './components/ListData'
 import Loading from './components/Loading'
@@ -22,35 +23,34 @@ export const AppContext = createContext<GlobalContent>({
 
 function App() {
   const [valueSearch, setValueSearch] = useState('React')
+  const debouncedValue = useDebounce(valueSearch, 700)
   const [newData, SetNewData] = useState([])
   const [pageNumber, setPageNumber] = useState(0)
   const searchInput = useRef<HTMLInputElement>(null)
-  const url = `https://hn.algolia.com/api/v1/search?query=${valueSearch}&page=${pageNumber}`
+  const url = `https://hn.algolia.com/api/v1/search?query=${debouncedValue}&page=${pageNumber}`
 
-  const InputSearch = (e: { target: { value: SetStateAction<string> } }) => {
-    setValueSearch(e.target.value)
-  }
+ 
   useEffect(() => {
     searchInput.current?.focus()
-  }, [valueSearch])
+  },[url])
 
   const { data, pending, error } = useFetch(url)
 
   useEffect(() => {
-    const addData=()=>{
-    if (data) {
-      const { hits } = data
-      SetNewData( hits )
+    const addData = () => {
+      if (data) {
+        const { hits } = data
+        SetNewData(hits)
+      }
     }
-  }
-  addData()
-  },[data])
-  const removeCard =(e: any) => {
-   
-   const newArr=newData?.filter((el:any)=>el.objectID !== e.target.parentElement.id)
+    addData()
+  }, [debouncedValue,data])
+  const removeCard = (e: any) => {
+    const newArr = newData?.filter(
+      (el: any) => el.objectID !== e.target.parentElement.id
+    )
 
-     SetNewData(newArr)
-    
+    SetNewData(newArr)
   }
 
   return (
@@ -68,7 +68,7 @@ function App() {
         ) : null}
         <h1> Search Hacker News</h1>
         <SearchInput
-          onChange={InputSearch}
+          onChange={(e:any) =>  setValueSearch(e.target.value)}
           value={valueSearch}
           focus={searchInput}
         />
