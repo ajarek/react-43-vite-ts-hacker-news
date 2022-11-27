@@ -1,10 +1,4 @@
-import {
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-  createContext,
-} from 'react'
+import { useEffect, useRef, useState, createContext } from 'react'
 import { useFetch } from './api/useFetch'
 import useDebounce from './hooks/useDebounce'
 import ErrorMessage from './components/ErrorMessage'
@@ -28,13 +22,11 @@ function App() {
   const [pageNumber, setPageNumber] = useState(0)
   const searchInput = useRef<HTMLInputElement>(null)
   const url = `https://hn.algolia.com/api/v1/search?query=${debouncedValue}&page=${pageNumber}`
+  const { data, pending, error } = useFetch(url)
 
- 
   useEffect(() => {
     searchInput.current?.focus()
-  },[url])
-
-  const { data, pending, error } = useFetch(url)
+  }, [url])
 
   useEffect(() => {
     const addData = () => {
@@ -44,7 +36,7 @@ function App() {
       }
     }
     addData()
-  }, [debouncedValue,data])
+  }, [debouncedValue, data])
   const removeCard = (e: any) => {
     const newArr = newData?.filter(
       (el: any) => el.objectID !== e.target.parentElement.id
@@ -68,7 +60,7 @@ function App() {
         ) : null}
         <h1> Search Hacker News</h1>
         <SearchInput
-          onChange={(e:any) =>  setValueSearch(e.target.value)}
+          onChange={(e: any) => setValueSearch(e.target.value)}
           value={valueSearch}
           focus={searchInput}
         />

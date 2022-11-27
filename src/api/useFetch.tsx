@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from 'react'
 
-export const useFetch = (url:string) => {
+export const useFetch = (url: string) => {
   const [data, setData] = useState(null)
   const [pending, setPending] = useState(true)
   const [error, setError] = useState(null)

@@ -4,16 +4,13 @@ interface Data {
   points: number
   num_comments: number
   url: string
-  objectID:string
+  objectID: string
 }
 type Props = {
-  data:Data[]
-  removeCard:(event: React.MouseEvent<HTMLButtonElement>)=>void
-  
-
+  data: Data[]
+  removeCard: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
-const ListData = ({ data,removeCard}: Props) => {
- 
+const ListData = ({ data, removeCard }: Props) => {
   return (
     <div className='wrapper-list'>
       {data.map((el: Data, index: number) => {
@@ -34,9 +31,9 @@ const ListData = ({ data,removeCard}: Props) => {
             >
               Read More
             </a>
-            <button className='button'
-            
-            onClick={removeCard}
+            <button
+              className='button'
+              onClick={removeCard}
             >
               Remove
             </button>
